@@ -1,7 +1,7 @@
 pipeline {
   agent {
     kubernetes {
-      yaml """
+      yaml '''
 apiVersion: v1
 kind: Pod
 metadata:
@@ -19,19 +19,30 @@ spec:
     command:
     - cat
     tty: true
-"""
+'''
     }
+
   }
   stages {
     stage('Run maven') {
       steps {
-        container('maven') {
+        container(name: 'maven') {
           sh 'ls'
         }
-        container('busybox') {
+
+        container(name: 'busybox') {
           sh 'ls'
         }
+
       }
     }
+
+    stage('yo') {
+      steps {
+        podTemplate()
+        input 'Yo Yo'
+      }
+    }
+
   }
 }
