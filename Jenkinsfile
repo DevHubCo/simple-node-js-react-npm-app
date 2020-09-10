@@ -26,10 +26,10 @@ spec:
     stage('Run maven') {
       steps {
         container('maven') {
-          sh 'mvn -version'
+          sh 'ls'
         }
         container('busybox') {
-          sh '/bin/busybox'
+          sh 'ls'
         }
       }
     }
