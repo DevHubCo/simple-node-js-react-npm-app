@@ -40,9 +40,7 @@ spec:
     stage('yo') {
       steps {
         podTemplate()
-        input {
-          message 'Deploy?'
-        }
+        input message: ‘Approve Deploy?’, ok: ‘Yes’
       }
     }
 
