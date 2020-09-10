@@ -41,6 +41,7 @@ spec:
       steps {
         podTemplate()
         input 'Yo Yo'
+        sh 'ls'
       }
     }
 
