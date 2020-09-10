@@ -1,15 +1,37 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:6-alpine' 
-            args '-p 3000:3000' 
-        }
+  agent {
+    kubernetes {
+      yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    some-label: some-label-value
+spec:
+  containers:
+  - name: maven
+    image: maven:alpine
+    command:
+    - cat
+    tty: true
+  - name: busybox
+    image: busybox
+    command:
+    - cat
+    tty: true
+"""
     }
-    stages {
-        stage('Build') { 
-            steps {
-                sh 'npm install' 
-            }
+  }
+  stages {
+    stage('Run maven') {
+      steps {
+        container('maven') {
+          sh 'mvn -version'
         }
+        container('busybox') {
+          sh '/bin/busybox'
+        }
+      }
     }
+  }
 }
