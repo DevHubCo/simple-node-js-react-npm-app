@@ -40,8 +40,9 @@ spec:
     stage('yo') {
       steps {
         podTemplate()
-        input 'Yo Yo'
-        sh 'ls'
+          input {
+            message 'Deploy?'
+          }
       }
     }
 
